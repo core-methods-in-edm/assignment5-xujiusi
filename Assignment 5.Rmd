@@ -1,6 +1,6 @@
 ---
 title: "Assignment 5 - Decision Trees"
-author: "Charles Lang"
+author: "Jiusi Xu"
 date: "November 9, 2016"
 output: html_document
 ---
@@ -16,7 +16,7 @@ library(party)
 
 ## Part I
 ```{r}
-D1 <- 
+D1 <- read.csv("intelligent_tutor.csv")
 ```
 
 ##Classification Tree
@@ -66,7 +66,7 @@ Upload the data "intelligent_tutor_new.csv". This is a data set of a differnt sa
 ```{r}
 #Upload new data
 
-D2 <- 
+D2 <- read.csv("intelligent_tutor_new.csv")
 
 #Generate predicted advice for new students based on tree generated from old students
 
@@ -75,3 +75,15 @@ D2$prediction <- predict(score_ctree, D2)
 ``` 
 ## Part III
 Compare the predicted advice with the actual advice that these studnts recieved. What is the difference between the observed and predicted results?
+
+```{r}
+
+D2$actual <- ifelse(D2$score <=0.4, "intervene", ifelse(D2$score > 0.4 & D2$score <=0.8, "monitor", "no action"))
+compare <- table(D2$actual == D2$prediction)/length(D2$actual)
+compare
+
+#FALSE  TRUE 
+ #0.42  0.58 
+
+plot(compare)
+```
